@@ -34,5 +34,19 @@ func New(
 		r.With(appmiddleware.RequireAuth(auth, log)).Get("/me", h.Me)
 	})
 
+	r.Route("/api/rewards", func(r chi.Router) {
+		r.Use(appmiddleware.RequireAuth(auth, log))
+		r.Post("/issue", h.IssueReward)
+		r.Get("/me", h.ListMyRewards)
+		r.Get("/daily-status", h.DailyStatus)
+		r.Post("/daily-claim", h.DailyClaim)
+	})
+
+	r.Route("/api/tasks", func(r chi.Router) {
+		r.Use(appmiddleware.RequireAuth(auth, log))
+		r.Get("/me", h.ListMyTasks)
+		r.Post("/{code}/claim", h.ClaimTask)
+	})
+
 	return r
 }

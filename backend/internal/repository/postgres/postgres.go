@@ -8,11 +8,16 @@ import (
 )
 
 type Repository struct {
-	db      *pgxpool.Pool
-	getter  *trmpgx.CtxGetter
-	User    *UserRepository
-	Pet     *PetRepository
-	Session *SessionRepository
+	db           *pgxpool.Pool
+	getter       *trmpgx.CtxGetter
+	User         *UserRepository
+	Pet          *PetRepository
+	Session      *SessionRepository
+	Event        *EventRepository
+	Rewards      *RewardsRepository
+	DailySummary *DailySummaryRepository
+	Leaderboard  *LeaderboardRepository
+	Tasks        *TasksRepository
 }
 
 func New(db *pgxpool.Pool) *Repository {
@@ -23,6 +28,11 @@ func New(db *pgxpool.Pool) *Repository {
 	r.User = NewUserRepository(r)
 	r.Pet = NewPetRepository(r)
 	r.Session = NewSessionRepository(r)
+	r.Event = NewEventRepository(r)
+	r.Rewards = NewRewardsRepository(r)
+	r.DailySummary = NewDailySummaryRepository(r)
+	r.Leaderboard = NewLeaderboardRepository(r)
+	r.Tasks = NewTasksRepository(r)
 	return r
 }
 
